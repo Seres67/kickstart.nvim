@@ -142,14 +142,7 @@ require('lazy').setup({
     },
   },
 
-  {
-    -- Theme inspired by Atom
-    'navarasu/onedark.nvim',
-    priority = 1000,
-    config = function()
-      vim.cmd.colorscheme 'onedark'
-    end,
-  },
+  vim.g.colors_name = 'starlight'
 
   {
     -- Set lualine as statusline
@@ -219,7 +212,7 @@ require('lazy').setup({
   --    Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   --
   --    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
-  -- { import = 'custom.plugins' },
+  { import = 'custom.plugins' },
 }, {})
 
 -- [[ Setting options ]]
@@ -262,6 +255,21 @@ vim.o.completeopt = 'menuone,noselect'
 
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
+
+-- My personal settings
+vim.opt.compatible = false 
+vim.opt.showmatch = true
+vim.opt.incsearch = true
+vim.opt.autoindent = true
+vim.opt.relativenumber = true
+vim.opt.nu = true
+vim.opt.wildmode = "longest,list"
+vim.opt.cc = "88"
+vim.opt.expandtab = true
+vim.opt.showcmd = true
+vim.opt.scrolloff = 8
+vim.opt.colorcolumn = "120"
+
 
 -- [[ Basic Keymaps ]]
 
@@ -325,10 +333,10 @@ vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = 
 vim.defer_fn(function()
   require('nvim-treesitter.configs').setup {
     -- Add languages to be installed here that you want installed for treesitter
-    ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim' },
+    ensure_installed = { 'c', 'cpp', 'lua', 'rust' },
   
     -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
-    auto_install = false,
+    auto_install = true,
   
     highlight = { enable = true },
     indent = { enable = true },
@@ -459,12 +467,8 @@ require('which-key').register({
 --  If you want to override the default filetypes that your language server will attach to you can
 --  define the property 'filetypes' to the map in question.
 local servers = {
-  -- clangd = {},
-  -- gopls = {},
-  -- pyright = {},
-  -- rust_analyzer = {},
-  -- tsserver = {},
-  -- html = { filetypes = { 'html', 'twig', 'hbs'} },
+  clangd = {},
+  rust_analyzer = {},
 
   lua_ls = {
     Lua = {
