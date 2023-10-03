@@ -86,7 +86,7 @@ require('lazy').setup({
 
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim', tag = 'legacy', opts = {} },
+      { 'j-hui/fidget.nvim',       tag = 'legacy', opts = {} },
 
       -- Additional lua configuration, makes nvim stuff amazing!
       'folke/neodev.nvim',
@@ -110,7 +110,7 @@ require('lazy').setup({
   },
 
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim', opts = {} },
+  { 'folke/which-key.nvim',  opts = {} },
   {
     -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
@@ -128,21 +128,19 @@ require('lazy').setup({
 
         -- don't override the built-in and fugitive keymaps
         local gs = package.loaded.gitsigns
-        vim.keymap.set({'n', 'v'}, ']c', function()
+        vim.keymap.set({ 'n', 'v' }, ']c', function()
           if vim.wo.diff then return ']c' end
           vim.schedule(function() gs.next_hunk() end)
           return '<Ignore>'
-        end, {expr=true, buffer = bufnr, desc = "Jump to next hunk"})
-        vim.keymap.set({'n', 'v'}, '[c', function()
+        end, { expr = true, buffer = bufnr, desc = "Jump to next hunk" })
+        vim.keymap.set({ 'n', 'v' }, '[c', function()
           if vim.wo.diff then return '[c' end
           vim.schedule(function() gs.prev_hunk() end)
           return '<Ignore>'
-        end, {expr=true, buffer = bufnr, desc = "Jump to previous hunk"})
+        end, { expr = true, buffer = bufnr, desc = "Jump to previous hunk" })
       end,
     },
   },
-
-  vim.g.colors_name = 'starlight'
 
   {
     -- Set lualine as statusline
@@ -219,6 +217,9 @@ require('lazy').setup({
 -- See `:help vim.o`
 -- NOTE: You can change these options as you wish!
 
+-- Set theme to starlight
+vim.cmd([[ colorscheme starlight ]])
+
 -- Set highlight on search
 vim.o.hlsearch = false
 
@@ -257,7 +258,7 @@ vim.o.completeopt = 'menuone,noselect'
 vim.o.termguicolors = true
 
 -- My personal settings
-vim.opt.compatible = false 
+vim.opt.compatible = false
 vim.opt.showmatch = true
 vim.opt.incsearch = true
 vim.opt.autoindent = true
@@ -291,6 +292,24 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   group = highlight_group,
   pattern = '*',
 })
+
+-- Set 'jk' as <ESC>
+vim.keymap.set('i', "jk", "<ESC>")
+vim.keymap.set('i', "<ESC>", "<NOP>")
+
+-- Auto fold
+vim.api.nvim_create_autocmd("BufReadPost,FileReadPost", {
+  pattern = "*",
+  command = "set foldlevel=20",
+})
+
+-- Illuminate
+vim.cmd([[
+let darkblue = '#36374a'
+exe 'hi IlluminatedWordText gui=none guibg= ' . darkblue
+hi link IlluminatedWordRead IlluminatedWordText
+hi link IlluminatedWordWrite IlluminatedWordText
+]])
 
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
@@ -334,10 +353,10 @@ vim.defer_fn(function()
   require('nvim-treesitter.configs').setup {
     -- Add languages to be installed here that you want installed for treesitter
     ensure_installed = { 'c', 'cpp', 'lua', 'rust' },
-  
+
     -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
     auto_install = true,
-  
+
     highlight = { enable = true },
     indent = { enable = true },
     incremental_selection = {
