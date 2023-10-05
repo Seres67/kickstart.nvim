@@ -72,7 +72,7 @@ require('lazy').setup({
     'tpope/vim-rhubarb',
 
     -- Detect tabstop and shiftwidth automatically
-    'tpope/vim-sleuth',
+    -- 'tpope/vim-sleuth',
 
     -- NOTE: This is where your plugins related to LSP can be installed.
     --  The configuration is done below. Search for lspconfig to find it below.
@@ -271,7 +271,9 @@ vim.opt.expandtab = true
 vim.opt.showcmd = true
 vim.opt.scrolloff = 8
 vim.opt.colorcolumn = "120"
-
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.expandtab = true
 
 -- [[ Basic Keymaps ]]
 
@@ -467,7 +469,15 @@ local on_attach = function(_, bufnr)
 
     -- Create a command `:Format` local to the LSP buffer
     vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
-        vim.lsp.buf.format()
+        vim.lsp.buf.format {
+            formatting_options = {
+                tabSize = 4,
+                insertSpaces = true,
+                trimTrailingWhitespace = true,
+                insertFinalNewline = true,
+                trimFinalNewlines = true
+            },
+        }
     end, { desc = 'Format current buffer with LSP' })
 end
 
