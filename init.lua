@@ -305,10 +305,10 @@ vim.keymap.set('i', "jk", "<ESC>")
 vim.keymap.set('i', "<ESC>", "<NOP>")
 
 -- Auto fold
-vim.api.nvim_create_autocmd("BufReadPost,FileReadPost", {
-    pattern = "*",
-    command = "set foldlevel=20",
-})
+-- vim.api.nvim_create_autocmd("BufReadPost,FileReadPost", {
+--     pattern = "*",
+--     command = "set foldlevel=20",
+-- })
 
 -- Illuminate
 vim.cmd([[
@@ -543,6 +543,48 @@ local cmp = require 'cmp'
 local luasnip = require 'luasnip'
 require('luasnip.loaders.from_vscode').lazy_load()
 luasnip.config.setup {}
+
+-- some shorthands...
+local text = luasnip.text_node
+local func = luasnip.function_node
+
+local filename = function()
+    return func(function(_args, snip)
+        local name = vim.split(snip.snippet.env.TM_FILENAME, ".", true)
+        return string.upper(name[1]) or ""
+    end)
+end
+
+local dirname = function()
+    return func(function(_args, snip)
+        local name = vim.split(snip.snippet.env.TM_DIRECTORY, "/", true)
+        return string.upper(name[#name - 1]) or ""
+    end)
+end
+
+-- Headerguard snippet
+luasnip.add_snippets("all", {
+    luasnip.snippet("#guard", {
+        text('#ifndef '),
+        dirname(),
+        text('_'),
+        filename(),
+        text({ '_H', '' }),
+        text('#define '),
+        dirname(),
+        text('_'),
+        filename(),
+        text({ '_H', '' }),
+        text({ '', '' }),
+        text({ '', '' }),
+        text({ '', '' }),
+        text('#endif // !'),
+        dirname(),
+        text('_'),
+        filename(),
+        text('_H'),
+    })
+})
 
 cmp.setup {
     snippet = {
