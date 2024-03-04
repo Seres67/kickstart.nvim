@@ -190,15 +190,6 @@ require('lazy').setup({
     },
 
     {
-        -- Theme inspired by Atom
-        'navarasu/onedark.nvim',
-        priority = 1000,
-        config = function()
-            vim.cmd.colorscheme 'onedark'
-        end,
-    },
-
-    {
         -- Add indentation guides even on blank lines
         'lukas-reineke/indent-blankline.nvim',
         -- Enable `lukas-reineke/indent-blankline.nvim`
@@ -416,7 +407,7 @@ vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = 
 vim.defer_fn(function()
     require('nvim-treesitter.configs').setup {
         -- Add languages to be installed here that you want installed for treesitter
-        ensure_installed = { 'c', 'cpp', 'lua', 'rust', 'vimdoc', 'vim', 'bash' },
+        ensure_installed = { 'c', 'cpp', 'lua', 'rust', 'go', 'vimdoc', 'vim', 'bash' },
 
         -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
         auto_install = false,
@@ -469,10 +460,10 @@ vim.defer_fn(function()
             swap = {
                 enable = true,
                 swap_next = {
-                    ['<leader>a'] = '@parameter.inner',
+                    ['<leader>s'] = '@parameter.inner',
                 },
                 swap_previous = {
-                    ['<leader>A'] = '@parameter.inner',
+                    ['<leader>S'] = '@parameter.inner',
                 },
             },
         },
