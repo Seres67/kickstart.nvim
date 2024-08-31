@@ -1,0 +1,3 @@
+return {
+    { 'jfecher/vale.vim' }
+}
