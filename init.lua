@@ -255,6 +255,7 @@ require('lazy').setup({
         changedelete = { text = '~' },
       },
     },
+  }
 
   -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
   --
@@ -323,6 +324,7 @@ require('lazy').setup({
         { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
       },
     },
+  }
 
   -- NOTE: Plugins can specify dependencies.
   --
