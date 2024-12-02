@@ -1,3 +1,1 @@
-return {
-  { 'natecraddock/workspaces.nvim' },
-}
+return { 'natecraddock/workspaces.nvim' }
